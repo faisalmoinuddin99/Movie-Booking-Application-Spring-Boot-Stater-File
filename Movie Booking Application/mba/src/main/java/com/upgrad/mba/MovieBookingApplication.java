@@ -107,6 +107,25 @@ public class MovieBookingApplication {
 		page0Sorted.stream().forEach(movie -> System.out.println(movie.getMovieName()));
 
 
+		System.out.println("**** find by movie name *****");
+		movieDao.findByMovieName("Tenet")
+				.forEach(movie -> System.out.println(movie.getMovieName()));
+
+		System.out.println("**** find by movieName and Duration ****");
+		movieDao.findByMovieNameAndDuration("The Dark Knight", 150)
+				.forEach(movie -> System.out.println(movie.getMovieName()));
+
+		System.out.println("***** find by release date between");
+		movieDao.findByReleaseDateBetween(
+				LocalDateTime.of(2019,3,1,0,0),
+				LocalDateTime.of(2020,3,1,0,0))
+				.forEach(movie -> System.out.println(movie.getMovieName()));
+
+		System.out.println("**** find by duration greater than or equal ****");
+		movieDao.findByDurationGreaterThanEqual(120)
+				.forEach(movie -> System.out.println(movie.getMovieName()));
+
+
 		// Saving inside the City table [ Concept of Spring ORM ]
 //		CityDao cityDao = _context.getBean(CityDao.class);
 //		City city = new City();
