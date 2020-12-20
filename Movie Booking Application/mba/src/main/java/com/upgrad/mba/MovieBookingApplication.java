@@ -125,6 +125,9 @@ public class MovieBookingApplication {
 		movieDao.findByDurationGreaterThanEqual(120)
 				.forEach(movie -> System.out.println(movie.getMovieName()));
 
+		System.out.println("*** find by release date after ****");
+		movieDao.findByReleaseDateAfter(LocalDateTime.of(2019,3,1,0,0))
+				.forEach(movie -> System.out.println(movie.getMovieName()));
 
 		// Saving inside the City table [ Concept of Spring ORM ]
 //		CityDao cityDao = _context.getBean(CityDao.class);
