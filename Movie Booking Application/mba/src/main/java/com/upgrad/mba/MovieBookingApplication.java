@@ -2,8 +2,10 @@ package com.upgrad.mba;
 
 import com.upgrad.mba.dao.CityDao;
 import com.upgrad.mba.dao.MovieDao;
+import com.upgrad.mba.dao.TheatreDao;
 import com.upgrad.mba.entites.City;
 import com.upgrad.mba.entites.Movie;
+import com.upgrad.mba.entites.Theatre;
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +29,9 @@ public class MovieBookingApplication {
 
 		//  [ Concept of Spring Data Jpa Repository ]
 		MovieDao movieDao = _context.getBean(MovieDao.class);
+
+
+
 
 
 		// Movie 1
@@ -135,6 +140,41 @@ public class MovieBookingApplication {
 //		city.setCityName("Mumbai");
 //
 //		System.out.println( cityDao.save(city)); // return the id
+
+		// ************************* Theatre Name **********************************
+		TheatreDao theatreDao = _context.getBean(TheatreDao.class);
+
+		Theatre theatre1 = new Theatre();
+		theatre1.setTheatreName("PVR");
+		theatre1.setTicketPrice(540);
+
+		Theatre theatre2 = new Theatre();
+		theatre2.setTheatreName("INOX");
+		theatre2.setTicketPrice(500);
+
+		Theatre theatre3 = new Theatre();
+		theatre3.setTheatreName("Cinepolis Multiplex");
+		theatre3.setTicketPrice(850);
+
+		List<Theatre> theatreList = new ArrayList<>() ;
+		theatreList.add(theatre1);
+		theatreList.add(theatre2);
+		theatreList.add(theatre3);
+
+
+		theatreDao.saveAll(theatreList);
+
+		System.out.println("***  Find By Theatre Name ***");
+		theatreDao.findByTheatreName("PVR")
+				.forEach(theatre -> System.out.println(theatre.getTheatreName()));
+		System.out.println("\n");
+		System.out.println("*** Find By Ticket Price Less Than ***");
+		theatreDao.findByTicketPriceLessThan(600)
+				.forEach(theatre -> System.out.println(theatre.getTicketPrice()));
+		System.out.println("\n");
+		System.out.println("*** Find By Theatre Name Containing ***");
+		theatreDao.findByTheatreNameContaining("Cinepolis Multiplex")
+				.forEach(theatre -> System.out.println(theatre.getTheatreName()));
 	}
 
 }
