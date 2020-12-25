@@ -1,9 +1,6 @@
 package com.upgrad.mba.entites;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Theatre {
@@ -16,6 +13,10 @@ public class Theatre {
 
     @Column(nullable = false)
     private float ticketPrice = 150.00f;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city ;
 
     public int getTheatreId() {
         return theatreId;

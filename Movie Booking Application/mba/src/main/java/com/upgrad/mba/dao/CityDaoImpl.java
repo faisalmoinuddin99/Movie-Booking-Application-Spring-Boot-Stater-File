@@ -16,6 +16,11 @@ public class CityDaoImpl implements CityDao {
     private SessionFactory sessionFactory;
 
     @Autowired // Injecting the Dependency of Session Factory
+    // Spring ORM + Hibernate
+    /*
+    * Spring ORM Inject EntityManagerFactory, EntityManagerFactory go and create sessionFactory
+    * session is used to perform CRUD operation
+    * */
     public CityDaoImpl(EntityManagerFactory entityManagerFactory){
         this.sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
@@ -27,7 +32,7 @@ public class CityDaoImpl implements CityDao {
         session.save(city) ; // Save the entity into the database
 
         transaction.commit();  // Commit the transaction and close the session
-        session.close();
+        session.close(); // Detached State
         return city ;
     }
 
@@ -67,4 +72,11 @@ public class CityDaoImpl implements CityDao {
         transaction.commit();
         session.close();
     }
+
+    /*
+    * PROBLEM WITH THIS APPROACH [Spring ORM + Hibernate ]
+    * 1. Repeatedly boilerPlateCode
+    * 2. Difficult to perform complex queries
+    * To overcome this issues we came up with Spring Data, just extends JPARepository< entity_Name, Integer >
+    * */
 }
