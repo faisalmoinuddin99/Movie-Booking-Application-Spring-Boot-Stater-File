@@ -1,6 +1,7 @@
 package com.upgrad.mba.entites;
 
 import javax.persistence.*;
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -23,10 +24,29 @@ public class Customer {
     @Column(length = 20, nullable = false)
     private String password;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    private Set<Booking> bookings;
+
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_contact_number", joinColumns = @JoinColumn(name = "customer_id"))
     @Column(name = "mobile_number", nullable = false)
     private Set<Integer> phoneNumbers;
+
+    public Set<Integer> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(Set<Integer> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
 
     @Column(nullable = false)
     private LocalDateTime dateOfBirth;
@@ -89,7 +109,8 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", phoneNumber='" + phoneNumbers + '\'' +
                 '}';
     }
 }
