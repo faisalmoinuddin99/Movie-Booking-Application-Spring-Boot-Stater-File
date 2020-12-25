@@ -2,6 +2,7 @@ package com.upgrad.mba.entites;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "Customer")
@@ -21,6 +22,11 @@ public class Customer {
 
     @Column(length = 20, nullable = false)
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "customer_contact_number", joinColumns = @JoinColumn(name = "customer_id"))
+    @Column(name = "mobile_number", nullable = false)
+    private Set<Integer> phoneNumbers;
 
     @Column(nullable = false)
     private LocalDateTime dateOfBirth;
